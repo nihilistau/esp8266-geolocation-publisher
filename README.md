@@ -9,13 +9,13 @@ Geolocator geolocator( pubSubClient );
 
 void setup() {
   ...
-  heartbeat.setup("some/mqtt/topic");
+  geolocator.setup("some/mqtt/topic");
   ...
 }
 
 void loop() {
   ...
-  heartbeat.loop();
+  geolocator.loop();
   ...
 }
 ```
