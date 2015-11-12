@@ -17,6 +17,7 @@ struct GeolocationMessageFixture : ::testing::Test {
     GeolocationMessageFixture() {
         mockESP8266WifiPtr = &mockWifi;
     }
+
     ~GeolocationMessageFixture() {
         mockESP8266WifiPtr = 0;
     }
