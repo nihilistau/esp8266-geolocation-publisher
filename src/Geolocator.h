@@ -1,6 +1,7 @@
 #ifndef Geolocator_h
 #define Geolocator_h
 
+#include "Arduino.h"
 #include <PubSubClient.h>
 
 class Geolocator {

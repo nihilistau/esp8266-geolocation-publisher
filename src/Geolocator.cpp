@@ -2,7 +2,6 @@
 
 #include <ESP8266WiFi.h>
 #include <PublicIpLookup.h>
-#include <WiFiRestClient.h>
 #include "GeolocatorMessage.h"
 
 Geolocator::Geolocator(
@@ -77,7 +76,8 @@ bool Geolocator::publish( String ip, int8_t networks ) {
 
   String body = GeolocatorMessage::format( ip, networks );
 
-  Serial.printf( "Publishing geolocation info to %s\n", topic.c_str() );
+  Serial.print( "Publishing geolocation info to " );
+  Serial.println( topic );
   Serial.println( body );
 
   bool published = client.publish( topic.c_str(), body.c_str() );
