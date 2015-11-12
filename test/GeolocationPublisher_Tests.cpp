@@ -39,7 +39,7 @@ TEST_F( GeolocatorPublisherFixture, loop_when_not_setup ) {
     StrictMock<PubSubClient> client;
 
     GeolocationPublisher publisher( client );
-    ASSERT_THROW( publisher.loop(), const char * );
+    publisher.loop();
 }
 
 TEST_F( GeolocatorPublisherFixture, loop_when_mqtt_not_connected ) {

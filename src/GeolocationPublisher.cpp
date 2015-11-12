@@ -24,7 +24,8 @@ void GeolocationPublisher::loop() {
   }
 
   if( !isSetup() ) {
-    throw "GeolocationPublisher not setup";
+    Serial.println( "ERROR: GeolocationPublisher not setup" );
+    return;
   }
 
   if( !client.connected() ) {
