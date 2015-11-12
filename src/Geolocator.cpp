@@ -20,12 +20,12 @@ void Geolocator::setup( const String& topic ) {
 
 void Geolocator::loop() {
 
-  if( !isSetup() ) {
-    Serial.println( "ERROR: Geolocator not setup" );
+  if( hasScanned ) {
     return;
   }
 
-  if( hasScanned ) {
+  if( !isSetup() ) {
+    Serial.println( "ERROR: Geolocator not setup" );
     return;
   }
 
