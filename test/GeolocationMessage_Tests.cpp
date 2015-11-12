@@ -5,10 +5,8 @@
 #include "GeolocationMessage.h"
 #include "ESP8266WiFi.h"
 
-using ::testing::_;
 using ::testing::StrEq;
 using ::testing::Return;
-using ::testing::AnyNumber;
 using ::testing::Mock;
 using ::testing::StrictMock;
 

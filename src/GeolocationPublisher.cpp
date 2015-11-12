@@ -10,7 +10,7 @@ GeolocationPublisher::GeolocationPublisher(
   )
   : client( client ),
     maxNetworks( maxNetworks ),
-    hasScanned( false ) {
+    hasPublished( false ) {
 }
 
 void GeolocationPublisher::setup( const String& topic ) {
@@ -19,7 +19,7 @@ void GeolocationPublisher::setup( const String& topic ) {
 
 void GeolocationPublisher::loop() {
 
-  if( hasScanned ) {
+  if( hasPublished ) {
     return;
   }
 
@@ -50,21 +50,8 @@ void GeolocationPublisher::loop() {
 
       // clean up
       WiFi.scanDelete();
-      hasScanned = true;
+      hasPublished = true;
       break;
-  }
-}
-
-void GeolocationPublisher::appendMacAddress( uint8_t* macAddress, String& output ) {
-
-  for( int i = 0; i < 6; i++ ) {
-
-    String part( macAddress[ i ], HEX );
-
-    if( part.length() == 1 ) {
-      output += "0";
-    }
-    output += part;
   }
 }
 
