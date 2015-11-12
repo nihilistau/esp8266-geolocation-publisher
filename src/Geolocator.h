@@ -12,18 +12,17 @@ public:
   void loop();
 
 private:
+
   PubSubClient& client;
-  String topic;
   const int maxNetworks;
+  String topic;
   
   bool isSetup() const {
       return topic.length() > 0;
   }
 
-  bool hasScanned;
-
+  bool hasPublished;
   bool publish( String ip, int8_t networks );
-  static void appendMacAddress( uint8_t* macAddress, String& output );
 
   String publicIpAddress;
   String getPublicIpAddress();
