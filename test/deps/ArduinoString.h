@@ -13,11 +13,20 @@ public:
     String() {
     }
 
+    String( const char* str )
+        : std::string( str ) {
+    }
+
     String( long int value, int base ) {
 
         if( base == 16 ) {
-
             std::stringstream ss;
+
+            if( value < 0 ) {
+                ss << "-";
+                value = value * -1;
+            }
+
             ss << std::hex << value;
             this->append( ss.str() );
 
