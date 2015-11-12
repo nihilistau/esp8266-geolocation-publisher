@@ -1,10 +1,10 @@
-#include "Geolocator.h"
+#include "GeolocationPublisher.h"
 
 #include <ESP8266WiFi.h>
 #include <PublicIpLookup.h>
-#include "GeolocatorMessage.h"
+#include "GeolocationMessage.h"
 
-Geolocator::Geolocator(
+GeolocationPublisher::GeolocationPublisher(
     PubSubClient& client,
     int maxNetworks
   )
@@ -13,18 +13,18 @@ Geolocator::Geolocator(
     hasPublished( false ) {
 }
 
-void Geolocator::setup( const String& topic ) {
+void GeolocationPublisher::setup( const String& topic ) {
   this->topic = topic;
 }
 
-void Geolocator::loop() {
+void GeolocationPublisher::loop() {
 
   if( hasPublished ) {
     return;
   }
 
   if( !isSetup() ) {
-    Serial.println( "ERROR: Geolocator not setup" );
+    Serial.println( "ERROR: GeolocationPublisher not setup" );
     return;
   }
 
@@ -55,13 +55,13 @@ void Geolocator::loop() {
   }
 }
 
-bool Geolocator::publish( String ip, int8_t networks ) {
+bool GeolocationPublisher::publish( String ip, int8_t networks ) {
 
   if( networks > maxNetworks ) {
     networks = maxNetworks;
   }
 
-  String body = GeolocatorMessage::format( ip, networks );
+  String body = GeolocationMessage::format( ip, networks );
 
   Serial.print( "Publishing geolocation info to " );
   Serial.println( topic );
@@ -74,7 +74,7 @@ bool Geolocator::publish( String ip, int8_t networks ) {
   return published;
 }
 
-String Geolocator::getPublicIpAddress() {
+String GeolocationPublisher::getPublicIpAddress() {
 
   if( publicIpAddress.length() == 0 ) {
     PublicIpLookup::lookupIpAddress( publicIpAddress );

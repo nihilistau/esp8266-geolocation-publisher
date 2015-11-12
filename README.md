@@ -5,7 +5,7 @@ Tiny library for publishing geolocation related data over mqtt via PubSubClient.
 ## Usage
 
 ```c++
-Geolocator geolocator( pubSubClient );
+GeolocationPublisher geolocator( pubSubClient );
 
 void setup() {
   ...

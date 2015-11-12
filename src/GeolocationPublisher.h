@@ -1,13 +1,13 @@
-#ifndef Geolocator_h
-#define Geolocator_h
+#ifndef GeolocationPublisher_h
+#define GeolocationPublisher_h
 
 #include "Arduino.h"
 #include <PubSubClient.h>
 
-class Geolocator {
+class GeolocationPublisher {
 public:
 
-  Geolocator( PubSubClient& client, int maxNetworks = 10 );
+  GeolocationPublisher( PubSubClient& client, int maxNetworks = 10 );
   void setup( const String& topic );
   void loop();
 

@@ -1,9 +1,9 @@
-#include "GeolocatorMessage.h"
+#include "GeolocationMessage.h"
 #include <ESP8266WiFi.h>
 
 #define GEOLOCATION_NETWORKS_FORMAT_VERSION 1
 
-String GeolocatorMessage::format( const String& ip, int8_t networks ) {
+String GeolocationMessage::format( const String& ip, int8_t networks ) {
 
   int bodyLength = 0;
 
@@ -52,7 +52,7 @@ String GeolocatorMessage::format( const String& ip, int8_t networks ) {
 
       body += separator;
       uint8_t* mac = WiFi.BSSID( i );
-      GeolocatorMessage::appendMacAddress( mac, body );
+      GeolocationMessage::appendMacAddress( mac, body );
 
       body += ",";
       body += String( WiFi.channel( i ), HEX );
@@ -73,7 +73,7 @@ String GeolocatorMessage::format( const String& ip, int8_t networks ) {
   return body;
 }
 
-void GeolocatorMessage::appendMacAddress( uint8_t* macAddress, String& output ) {
+void GeolocationMessage::appendMacAddress( uint8_t* macAddress, String& output ) {
 
   for( int i = 0; i < 6; i++ ) {
 
