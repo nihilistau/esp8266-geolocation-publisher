@@ -1,7 +1,8 @@
 #include "Geolocator.h"
 
 #include <ESP8266WiFi.h>
-#include <WiFiRestClient.h>
+#include <PublicIpLookup.h>
+#include "GeolocatorMessage.h"
 
 Geolocator::Geolocator(
     PubSubClient& client,
@@ -18,12 +19,12 @@ void Geolocator::setup( const String& topic ) {
 
 void Geolocator::loop() {
 
-  if( !isSetup() ) {
-    Serial.println( "ERROR: Geolocator not setup" );
+  if( hasScanned ) {
     return;
   }
 
-  if( hasScanned ) {
+  if( !isSetup() ) {
+    Serial.println( "ERROR: Geolocator not setup" );
     return;
   }
 
@@ -54,43 +55,29 @@ void Geolocator::loop() {
   }
 }
 
+void Geolocator::appendMacAddress( uint8_t* macAddress, String& output ) {
+
+  for( int i = 0; i < 6; i++ ) {
+
+    String part( macAddress[ i ], HEX );
+
+    if( part.length() == 1 ) {
+      output += "0";
+    }
+    output += part;
+  }
+}
+
 bool Geolocator::publish( String ip, int8_t networks ) {
 
   if( networks > maxNetworks ) {
     networks = maxNetworks;
   }
 
-  String body;
-  body.reserve( 38 + networks * 51 );
+  String body = GeolocatorMessage::format( ip, networks );
 
-  body += "{";
-
-  if( ip.length() > 0 ) {
-    body += "\"ip\":\"";
-    body += ip;
-    body += "\",";
-  }
-
-  body += "\"networks\":[";
-
-  for( int8_t i = 0; i < networks; i++ ) {
-
-    if( i > 0 ) {
-      body += ",";
-    }
-
-    body += "{\"mac\":\"";
-    body += WiFi.BSSIDstr( i );
-    body += "\",\"channel\":";
-    body += WiFi.channel( i );
-    body += ",\"rssi\":";
-    body += WiFi.RSSI( i );
-    body += "}";
-  }
-
-  body += "]}";
-
-  Serial.printf( "Publishing geolocation info to %s\n", topic.c_str() );
+  Serial.print( "Publishing geolocation info to " );
+  Serial.println( topic );
   Serial.println( body );
 
   bool published = client.publish( topic.c_str(), body.c_str() );
@@ -103,25 +90,8 @@ bool Geolocator::publish( String ip, int8_t networks ) {
 String Geolocator::getPublicIpAddress() {
 
   if( publicIpAddress.length() == 0 ) {
-    publicIpAddress = Geolocator::lookupPublicIpAddress();
+    PublicIpLookup::lookupIpAddress( publicIpAddress );
   }
 
   return publicIpAddress;
-}
-
-String Geolocator::lookupPublicIpAddress() {
-
-  WiFiRestClient restClient( "api.ipify.org" );
-
-  String ipAddress;
-
-  int statusCode = restClient.get( "/?format=text", &ipAddress );
-  if( statusCode == 200 ) {
-
-    ipAddress.trim();
-    return ipAddress;
-
-  } else {
-    return "";
-  }
 }
