@@ -1,9 +1,9 @@
-#ifndef GeolocatorMessage_h
-#define GeolocatorMessage_h
+#ifndef GeolocationMessage_h
+#define GeolocationMessage_h
 
 #include "Arduino.h"
 
-class GeolocatorMessage {
+class GeolocationMessage {
 public:
   static String format( const String& ip, int8_t wifiNetworks );
 private:
