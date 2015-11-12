@@ -1,0 +1,9 @@
+general:
+  build_dir: test
+
+test:
+  pre:
+    - cmake .
+    - make
+  override:
+    - bin/Tests

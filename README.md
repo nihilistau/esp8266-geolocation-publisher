@@ -23,6 +23,5 @@ void loop() {
 ## Running Tests
 
 ```bash
-cd test
-cmake . && make && make test
+./run-tests.sh
 ```
