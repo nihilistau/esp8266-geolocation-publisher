@@ -8,6 +8,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 set(GTEST_DIR ../third-party/gtest-1.7.0)
 set(GMOCK_DIR ../third-party/googlemock-1.7.0)
 
+add_definitions( -DGEOLOCATION_PUBLISHER_TEST )
+
 file(GLOB TESTS_FILES *.cpp)
 file(GLOB SRC_FILES ../src/*.cpp)
 file(GLOB DEP_FILES deps/*.cpp)
