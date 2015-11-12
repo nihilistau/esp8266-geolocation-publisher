@@ -64,7 +64,7 @@ String GeolocatorMessage::format( const String& ip, int8_t networks ) {
     }
   }
 
-#if GEOLOCATION_TEST
+#if GEOLOCATION_PUBLISHER_TEST
   if( body.length() > bodyLength ) {
     throw "Geolocation body under provisioned";
   }
