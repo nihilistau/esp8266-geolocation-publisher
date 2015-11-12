@@ -10,7 +10,7 @@ Geolocator::Geolocator(
   )
   : client( client ),
     maxNetworks( maxNetworks ),
-    hasScanned( false ) {
+    hasPublished( false ) {
 }
 
 void Geolocator::setup( const String& topic ) {
@@ -19,7 +19,7 @@ void Geolocator::setup( const String& topic ) {
 
 void Geolocator::loop() {
 
-  if( hasScanned ) {
+  if( hasPublished ) {
     return;
   }
 
@@ -50,21 +50,8 @@ void Geolocator::loop() {
 
       // clean up
       WiFi.scanDelete();
-      hasScanned = true;
+      hasPublished = true;
       break;
-  }
-}
-
-void Geolocator::appendMacAddress( uint8_t* macAddress, String& output ) {
-
-  for( int i = 0; i < 6; i++ ) {
-
-    String part( macAddress[ i ], HEX );
-
-    if( part.length() == 1 ) {
-      output += "0";
-    }
-    output += part;
   }
 }
 
